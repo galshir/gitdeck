@@ -2,7 +2,7 @@
   "name": "gitdeck",
   "displayName": "GitDeck",
   "description": "Your git flow in one panel: switch branches in one click. Each branch gets its own worktree with shared node_modules/.env, its own ports, and a live run status.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "barmelamed",
   "license": "MIT",
   "icon": "media/icon.png",

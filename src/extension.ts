@@ -23,8 +23,9 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
     }
   };
 
-  // When the window is the repo (or one of its worktrees) we stay on it and switch in place.
-  // When it's a parent folder like ~/repos, follow the active editor and open branches in a new window.
+  // When the window is the repo (or one of its worktrees) we stay on it.
+  // When it's a parent folder like ~/repos, follow the active editor to pick the repo.
+  // Either way, switching a branch reopens this window on its worktree.
   const folderRepo = folder ? await repoAt(folder) : undefined;
   const pinned = !!folderRepo;
   await vscode.commands.executeCommand('setContext', 'gitdeck.pinned', pinned);
@@ -80,7 +81,8 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
   const openWorktree = async (target: string, notes: string[], newWindow: boolean) => {
     if (notes.length) await vscode.window.showWarningMessage(notes.join('\n\n'), { modal: true });
     await vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(target), {
-      forceNewWindow: newWindow || !pinned,
+      forceNewWindow: newWindow,
+      forceReuseWindow: !newWindow,
     });
   };
 
